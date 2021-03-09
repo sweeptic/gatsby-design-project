@@ -30,12 +30,40 @@ export const query = graphql`
 `;
 
 const Slider = () => {
+  const savedCallback = React.useRef();
+
+  const [autoslide, setAutoslide] = React.useState(true);
+
+  React.useEffect(() => {
+    savedCallback.current = () => setIndex(index + 1);
+  });
+
+  React.useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+
+    let id = autoslide && setInterval(tick, 5000);
+    return () => clearInterval(id);
+  }, [autoslide]);
+
   const {
     allAirtable: { nodes: customers },
   } = useStaticQuery(query);
 
-  const [index, setIndex] = React.useState(1);
+  const [index, setIndex] = React.useState(0);
+
   // more logic
+
+  React.useEffect(() => {
+    const lastIndex = customers.length - 1;
+    if (index < 0) {
+      setIndex(lastIndex);
+    }
+    if (index > lastIndex) {
+      setIndex(0);
+    }
+  }, [index, customers]);
 
   return (
     <Wrapper className='section'>
@@ -53,6 +81,11 @@ const Slider = () => {
             position = 'activeSlide';
           }
 
+          // elozo;
+          if (customerIndex === index - 1 || (index === 0 && customerIndex === customers.length - 1)) {
+            position = 'lastSlide';
+          }
+
           //more logic
           return (
             <article className={position} key={customerIndex}>
@@ -64,6 +97,25 @@ const Slider = () => {
             </article>
           );
         })}
+
+        <button
+          className='prev'
+          onClick={() => {
+            setAutoslide(false);
+            return setIndex(index - 1);
+          }}
+        >
+          <FiChevronLeft />
+        </button>
+        <button
+          className='next'
+          onClick={() => {
+            setAutoslide(false);
+            return setIndex(index + 1);
+          }}
+        >
+          <FiChevronRight />
+        </button>
       </div>
     </Wrapper>
   );
