@@ -1,19 +1,3 @@
-import React from "react"
-import { createGlobalStyle } from "styled-components"
-//provider
+import { wrapRootElement as wrap } from "./root-wrapper"
 
-const GlobalStyle = createGlobalStyle`
-h2{
-   color: red;
-   font-size: 4rem;
-}
-`
-
-export const wrapRootElement = ({ element }) => {
-  return (
-    <>
-      <GlobalStyle />
-      {element}
-    </>
-  )
-}
+export const wrapRootElement = wrap
