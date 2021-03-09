@@ -8,15 +8,32 @@ const query = graphql`
     file(relativePath: { eq: "mainBcg.png" }) {
       childImageSharp {
         fluid {
-          src
+          ...GatsbyImageSharpFluid
         }
       }
     }
   }
 `
 
-const Background = () => {
-  return <h2>background image component</h2>
+const Background = ({ children }) => {
+  const {
+    file: {
+      childImageSharp: { fluid },
+    },
+  } = useStaticQuery(query)
+
+  return (
+    <Wrapper>
+      <BackgroundImage
+        Tag="div"
+        fluid={fluid}
+        className="bcg"
+        preserveStackingContext={true}
+      >
+        {children}
+      </BackgroundImage>
+    </Wrapper>
+  )
 }
 
 const fadeIn = keyframes`
