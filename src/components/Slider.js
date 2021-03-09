@@ -1,10 +1,10 @@
-import React from "react"
-import { graphql, useStaticQuery } from "gatsby"
-import Title from "./Title"
-import styled from "styled-components"
-import Image from "gatsby-image"
-import { FaQuoteRight } from "react-icons/fa"
-import { FiChevronRight, FiChevronLeft } from "react-icons/fi"
+import React from 'react';
+import { graphql, useStaticQuery } from 'gatsby';
+import Title from './Title';
+import styled from 'styled-components';
+import Image from 'gatsby-image';
+import { FaQuoteRight } from 'react-icons/fa';
+import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
 
 export const query = graphql`
   {
@@ -17,7 +17,7 @@ export const query = graphql`
           image {
             localFiles {
               childImageSharp {
-                fixed {
+                fixed(width: 150, height: 150) {
                   ...GatsbyImageSharpFixed
                 }
               }
@@ -27,11 +27,47 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
 const Slider = () => {
-  return <h2>slider component</h2>
-}
+  const {
+    allAirtable: { nodes: customers },
+  } = useStaticQuery(query);
+
+  const [index, setIndex] = React.useState(1);
+  // more logic
+
+  return (
+    <Wrapper className='section'>
+      <Title title='reviews' />
+      <div className='section-center'>
+        {customers.map((customer, customerIndex) => {
+          const {
+            data: { image, name, title, quote },
+          } = customer;
+
+          const customerImg = image.localFiles[0].childImageSharp.fixed;
+
+          let position = 'nextSlide';
+          if (customerIndex === index) {
+            position = 'activeSlide';
+          }
+
+          //more logic
+          return (
+            <article className={position} key={customerIndex}>
+              <Image fixed={customerImg} className='img'></Image>
+              <h4>{name}</h4>
+              <p className='title'>{title}</p>
+              <p className='text'>{quote}</p>
+              <FaQuoteRight className='icon' />
+            </article>
+          );
+        })}
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   background: var(--clr-grey-10);
@@ -123,5 +159,5 @@ const Wrapper = styled.div`
       transform: translateX(100%);
     }
   }
-`
-export default Slider
+`;
+export default Slider;
