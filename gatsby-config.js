@@ -1,7 +1,8 @@
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
-// const queries = require("./src/constants/algolia")
+const queries = require('./src/constants/algolia');
+
 module.exports = {
   siteMetadata: {
     title: `Design Shop`,
@@ -63,9 +64,9 @@ module.exports = {
       resolve: `gatsby-plugin-algolia`,
       options: {
         appId: process.env.GATSBY_ALGOLIA_APP_ID,
-        appKey: process.env.GATSBY_ALGOLIA_ADMIN_KEY,
+        apiKey: process.env.GATSBY_ALGOLIA_ADMIN_KEY,
         indexName: process.env.GATSBY_ALGOLIA_INDEX_NAME,
-        queries: [],
+        queries: require('./src/constants/algolia'),
         chunkSize: 10000,
       },
     },
