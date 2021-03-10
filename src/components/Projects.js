@@ -30,7 +30,6 @@ const Projects = ({ projects: data, title, page }) => {
         {projects.map(item => {
           const { id } = item;
           const { name, type } = item.data;
-          console.log(item);
 
           const fluid = item.data.image.localFiles[0].childImageSharp.fluid;
 
