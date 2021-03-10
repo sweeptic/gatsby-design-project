@@ -1,22 +1,34 @@
-import React from "react"
-import Background from "./Background"
-import styled from "styled-components"
-import { Link } from "gatsby"
-import { FiChevronRight, FiChevronLeft } from "react-icons/fi"
+import React from 'react';
+import Background from './Background';
+import styled from 'styled-components';
+import { Link } from 'gatsby';
+import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
 
-const Hero = () => {
+const Hero = ({ projects }) => {
+  const images = projects.map(item => {
+    const {
+      data: {
+        image: { localFiles },
+      },
+    } = item;
+    const image = localFiles[0].childImageSharp.fluid;
+    return image;
+  });
+
+  const [index, setIndex] = React.useState(0);
+
   return (
     <Wrapper>
-      <Background>
+      <Background image={images[0]}>
         <article>
           <h3>if you can dream it, we can create it</h3>
           <h1>let your home unique and stylish</h1>
-          <Link to="/projects">Projects</Link>
+          <Link to='/projects'>Projects</Link>
         </article>
       </Background>
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled.section`
   article {
@@ -33,7 +45,7 @@ const Wrapper = styled.section`
     }
     h3 {
       font-weight: 400;
-      font-family: "Caveat", cursive;
+      font-family: 'Caveat', cursive;
     }
     a {
       background: transparent;
@@ -125,6 +137,6 @@ const Wrapper = styled.section`
       background-color: transparent;
     }
   }
-`
+`;
 
-export default Hero
+export default Hero;
