@@ -5,12 +5,12 @@ import { Link } from 'gatsby';
 import { GatsbyContext } from '../context/context';
 
 const Sidebar = () => {
-  const { links } = React.useContext(GatsbyContext);
+  const { links, hideSidebar } = React.useContext(GatsbyContext);
 
   return (
     <Wrapper>
       <div className='container'>
-        <button>
+        <button onClick={hideSidebar}>
           <MdClose className='icon' />
         </button>
 
