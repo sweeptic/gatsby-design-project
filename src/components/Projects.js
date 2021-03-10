@@ -1,48 +1,60 @@
-import React from "react"
-import { Link } from "gatsby"
-import Title from "./Title"
-import styled from "styled-components"
-import Image from "gatsby-image"
-import SearchButtons from "./SearchButtons"
+import React from 'react';
+import { Link } from 'gatsby';
+import Title from './Title';
+import styled from 'styled-components';
+import Image from 'gatsby-image';
+import SearchButtons from './SearchButtons';
 
 const Projects = ({ projects: data, title, page }) => {
-  const [projects, setProjects] = React.useState(data)
+  const [projects, setProjects] = React.useState(data);
 
   // more logic
+  const setBackToAll = () => {
+    setProjects(data);
+  };
 
   return (
-    <Wrapper className="section">
-      <Title title={title || "projects"} />
-      {/* search buttons here */}
-      <div className="section-center">
-        {projects.map(item => {
-          const { id } = item
-          const { name, type } = item.data
-          console.log(item)
+    <Wrapper className='section'>
+      <Title title={title || 'projects'} />
 
-          const fluid = item.data.image.localFiles[0].childImageSharp.fluid
+      {/* search buttons here */}
+      {page && (
+        <SearchButtons
+          projects={data}
+          setProjects={setProjects}
+          setBackToAll={setBackToAll}
+        />
+      )}
+
+      <div className='section-center'>
+        {projects.map(item => {
+          const { id } = item;
+          const { name, type } = item.data;
+          console.log(item);
+
+          const fluid = item.data.image.localFiles[0].childImageSharp.fluid;
 
           return (
             <article key={id}>
-              <div className="container">
-                <Image fluid={fluid} className="img" />
-                <div className="info">
+              <div className='container'>
+                <Image fluid={fluid} className='img' />
+                <div className='info'>
                   <p>- {type} -</p>
                   <h3>{name}</h3>
                 </div>
               </div>
             </article>
-          )
+          );
         })}
       </div>
       {!page && (
-        <Link to="/projects" className="btn">
+        <Link to='/projects' className='btn'>
           all projects
         </Link>
       )}
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled.section`
   background: var(--clr-grey-10);
@@ -119,5 +131,5 @@ const Wrapper = styled.section`
     margin: 0 auto;
     margin-top: 3rem;
   }
-`
-export default Projects
+`;
+export default Projects;
