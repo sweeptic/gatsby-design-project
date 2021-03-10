@@ -7,7 +7,15 @@ import NavLink from './NavLink';
 import { GatsbyContext } from '../context/context';
 
 const Navbar = () => {
-  const { isSidebarOpen, showSidebar } = useContext(GatsbyContext);
+  const { isSidebarOpen, showSidebar, links } = useContext(GatsbyContext);
+
+  const tempLinks = [
+    ...new Set(
+      links.map(link => {
+        return link.page;
+      })
+    ),
+  ];
 
   return (
     <Wrapper>
@@ -23,7 +31,14 @@ const Navbar = () => {
             </button>
           )}
         </div>
+
         <ul className='nav-links'>
+          {tempLinks.map((page, index) => {
+            return <NavLink key={index} page={page}></NavLink>;
+          })}
+        </ul>
+
+        {/* <ul className='nav-links'>
           <li>
             <button>Products</button>
           </li>
@@ -32,12 +47,12 @@ const Navbar = () => {
           </li>
           <li>
             <button>Company</button>
-          </li>
-          {/* this is how setup nested pages in gatsby */}
-          {/* <li>
+          </li> */}
+        {/* this is how setup nested pages in gatsby */}
+        {/* <li>
             <Link to='/products/payments'>Company</Link>
           </li> */}
-        </ul>
+        {/* </ul> */}
       </div>
     </Wrapper>
   );
