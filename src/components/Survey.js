@@ -1,10 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Title from './Title';
 import styled from 'styled-components';
 import base from './Airtable';
 import { FaVoteYea } from 'react-icons/fa';
 
 const Survey = () => {
+  const [items, setItems] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+
+  const getRecords = async () => {
+    const records = await base('Survey')
+      .select({})
+      .firstPage()
+      .catch(err => console.log(err));
+
+    const newItems = records.map(record => {
+      const { id, fields } = record;
+      return {
+        id,
+        fields,
+      };
+    });
+
+    setItems(newItems);
+    setLoading(false);
+  };
+
+  React.useEffect(() => {
+    getRecords();
+  }, []);
+
   return <h2>survey component</h2>;
 };
 
