@@ -8,12 +8,17 @@ const Survey = () => {
   const [items, setItems] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
 
+  React.useEffect(() => {
+    getRecords();
+  }, []);
+
   const getRecords = async () => {
     const records = await base('Survey')
       .select({})
       .firstPage()
       .catch(err => console.log(err));
 
+    //duplicate #1
     const newItems = records.map(record => {
       const { id, fields } = record;
       return {
@@ -21,14 +26,37 @@ const Survey = () => {
         fields,
       };
     });
-
     setItems(newItems);
     setLoading(false);
+    //duplicate END
   };
 
-  React.useEffect(() => {
-    getRecords();
-  }, []);
+  const giveVote = async id => {
+    setLoading(true);
+    const tempItems = [...items].map(item => {
+      if (item.id === id) {
+        let { id, fields } = item;
+        fields = { ...fields, votes: fields.votes + 1 };
+        return { id, fields };
+      } else {
+        return item;
+      }
+    });
+    const records = await base('Survey')
+      .update(tempItems)
+      .catch(err => {
+        console.log(err);
+      });
+
+    //duplicate #1
+    const newItems = records.map(record => {
+      const { id, fields } = record;
+      return { id, fields };
+    });
+    setItems(newItems);
+    setLoading(false);
+    //duplicate END
+  };
 
   return (
     <Wrapper className='section'>
@@ -55,7 +83,7 @@ const Survey = () => {
                   </div>
                   <button
                     onClick={() => {
-                      console.log('you vote me');
+                      giveVote(id);
                     }}
                   >
                     <FaVoteYea />
