@@ -1,6 +1,6 @@
-require("dotenv").config({
+require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
-})
+});
 // const queries = require("./src/constants/algolia")
 module.exports = {
   siteMetadata: {
@@ -30,10 +30,10 @@ module.exports = {
         fonts: {
           google: [
             {
-              family: "Roboto",
-              variants: ["400", "700"],
+              family: 'Roboto',
+              variants: ['400', '700'],
             },
-            { family: "Open Sans" },
+            { family: 'Open Sans' },
           ],
         },
       },
@@ -58,5 +58,16 @@ module.exports = {
         ],
       },
     },
+
+    {
+      resolve: `gatsby-plugin-algolia`,
+      options: {
+        appId: process.env.GATSBY_ALGOLIA_APP_ID,
+        appKey: process.env.GATSBY_ALGOLIA_ADMIN_KEY,
+        indexName: process.env.GATSBY_ALGOLIA_INDEX_NAME,
+        queries: [],
+        chunkSize: 10000,
+      },
+    },
   ],
-}
+};
