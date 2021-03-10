@@ -13,13 +13,13 @@ vscode-styled-components
 Regular Setup
 
 ```jsx
-import styled from "styled-components"
+import styled from 'styled-components';
 const NameOfElement = styled.htmlElement`
 your
 styles
 go
 here
-`
+`;
 ```
 
 Global Styles
@@ -65,9 +65,9 @@ npm install --save gatsby-background-image
 gatsby-config
 
 ```js
-require("dotenv").config({
+require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
-})
+});
 ```
 
 #### ROOT!!!!!!!!!!!!!!!
@@ -78,3 +78,8 @@ require("dotenv").config({
 ## Algolia
 
 [algolia](https://www.algolia.com/);
+
+GATSBY_ALGOLIA_ADMIN_KEY=
+GATSBY_ALGOLIA_APP_ID=
+GATSBY_ALGOLIA_INDEX_NAME=
+GATSBY_ALGOLIA_SEARCH_KEY=
