@@ -1,23 +1,23 @@
-import React, { useContext } from "react"
-import styled from "styled-components"
-import logo from "../images/logo.svg"
-import { GoThreeBars } from "react-icons/go"
-import { Link } from "gatsby"
-import NavLink from "./NavLink"
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import logo from '../images/logo.svg';
+import { GoThreeBars } from 'react-icons/go';
+import { Link } from 'gatsby';
+import NavLink from './NavLink';
 
 const Navbar = () => {
   return (
     <Wrapper>
-      <div className="nav-center">
-        <div className="nav-header">
-          <Link to="/">
-            <img src={logo} alt="design"></img>
+      <div className='nav-center'>
+        <div className='nav-header'>
+          <Link to='/'>
+            <img src={logo} alt='design'></img>
           </Link>
-          <button className="toggle-btn">
+          <button className='toggle-btn'>
             <GoThreeBars />
           </button>
         </div>
-        <ul className="nav-links">
+        <ul className='nav-links'>
           <li>
             <button>Products</button>
           </li>
@@ -27,11 +27,15 @@ const Navbar = () => {
           <li>
             <button>Company</button>
           </li>
+          {/* this is how setup nested pages in gatsby */}
+          {/* <li>
+            <Link to='/products/payments'>Company</Link>
+          </li> */}
         </ul>
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled.nav`
   position: relative;
@@ -109,6 +113,6 @@ const Wrapper = styled.nav`
       position: relative;
     }
   }
-`
+`;
 
-export default Navbar
+export default Navbar;
