@@ -20,7 +20,7 @@ const searchClient = algoliasearch(
 
 const Search = () => {
   return (
-    <section>
+    <Wrapper>
       <Title title='Algolia Search' />
       <InstantSearch
         indexName={process.env.GATSBY_ALGOLIA_INDEX_NAME}
@@ -29,7 +29,7 @@ const Search = () => {
         <SearchBox />
         <Hits />
       </InstantSearch>
-    </section>
+    </Wrapper>
   );
 };
 
